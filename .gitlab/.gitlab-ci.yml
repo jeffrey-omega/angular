@@ -1,0 +1,43 @@
+image: node:lts-alpine
+variables:
+  FF_USE_FASTZIP: "true"
+  ALPINE_PACKAGES: "native-deps bash g++ gcc libgcc libstdc++ linux-headers make python2 chromium"
+  GLOBAL_NPM_PACKAGES: "node-gyp @angular/cli"
+
+
+cache:
+  untracked: true
+  policy: push
+  key: ${CI_COMMIT_SHORT_SHA}
+  paths:
+    - node_modules/
+
+.pull_cached_node_modules:
+  cache:
+    untracked: true
+    key: ${CI_COMMIT_SHORT_SHA}
+    policy: pull
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - npm ci
+
+test:
+  coverage: '/Statements\s+:\s\d+.\d+%/'
+  stage: test
+  extends: .pull_cached_node_modules
+  before_script:
+    - apk update
+    - apk --no-cache add --virtual $ALPINE_PACKAGES
+    - npm install -g --quiet $GLOBAL_NPM_PACKAGES
+    - export CHROME_BIN=/usr/bin/chromium-browser
+  script:
+    - npm run test:ci
+  artifacts:
+    paths:
+      - coverage/
