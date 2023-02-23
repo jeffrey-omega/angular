@@ -1,7 +1,7 @@
 image: node:lts-alpine
 variables:
   FF_USE_FASTZIP: "true"
-  ALPINE_PACKAGES: "native-deps bash g++ gcc libgcc libstdc++ linux-headers make python2 chromium"
+  ALPINE_PACKAGES: "native-deps bash g++ gcc libgcc libstdc++ linux-headers make python3 chromium"
   GLOBAL_NPM_PACKAGES: "node-gyp @angular/cli"
 
 
