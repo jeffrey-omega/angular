@@ -9,17 +9,26 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os:
+              - ubuntu-latest
+              - macos-latest
+              - windows-latest
+            architecture:
+              - x64
+              
+    name: Node - ${{ matrix.architecture }} on ${{ matrix.os }}     
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-path: '.nvmrc'
+        node-version-file: '.nvmrc'
+        architecture: ${{ matrix.architecture }}
         cache: 'npm'
 
     - name: Install dependencies
