@@ -17,13 +17,17 @@
             "interval": "before 08:00 and after 18:00"
         }
     ],
-    "automerge": true,
+    "lockFileMaintenance": {
+        "enabled": true,
+        "automerge": true
+    }
     "packageRules": [
         {
             "updateTypes": [
                 "minor",
                 "patch"
             ],
+            "matchCurrentVersion": "!/^0/",
             "automerge": true
         }
     ],
