@@ -8,7 +8,8 @@
 
 - [ ] Documentation
     - [ ] GitHub Configuration
-        - [x] Workflows
+        - [ ] Workflows
+            - [x] Add [Skipping workflow runs](./WORKFLOWS.md#skipping-workflow-runs)
         - [x] Renovate             
     - [ ] GitLab Configuration
         - [x] CI/CD
